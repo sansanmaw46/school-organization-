@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <title>ပညာရေးဝန်ထမ်းစာရင်း</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    input { padding: 8px; margin: 5px; }
+    .form-container, .search-box { width: 90%; margin: auto; text-align: left; }
+    .search-box { text-align: right; }
+  </style>
+</head>
+<body>
+  <h2>ပညာရေးဝန်ထမ်းအင်အားစာရင်း</h2>
+
+  <div class="search-box">
+    🔍 <input type="text" id="searchInput" placeholder="အမည်ဖြင့်ရှာရန်..." onkeyup="filterTable()">
+  </div>
+
+  <table id="staffTable">
+    <thead>
+      <tr>
+        <th>စဉ်</th>
+        <th>အမည်</th>
+        <th>ရာထူး</th>
+        <th>မွေးနေ့</th>
+        <th>ဖျက်ရန်</th>
+      </tr>
+    </thead>
+    <tbody id="staffBody"></tbody>
+  </table>
+
+  <div class="form-container">
+    <h3>➕ ဝန်ထမ်းအသစ်ထည့်ရန်</h3>
+    <input type="text" id="name" placeholder="အမည်">
+    <input type="text" id="position" placeholder="ရာထူး">
+    <input type="date" id="dob">
+    <button onclick="addStaff()">ထည့်မည်</button>
+  </div>
+
+  <button onclick="history.back()">🔙 နောက်သို့</button>
+
+  <script>
+    let staff = JSON.parse(localStorage.getItem("staffList")) || [
+      { name: "မောင်မောင်", position: "အုပ်ချုပ်ရေးမှူး", dob: "1980-05-12" },
+      { name: "ခင်မြင့်", position: "အထွေထွေဝန်ထမ်း", dob: "1985-08-23" }
+    ];
+
+    function renderTable() {
+      const tbody = document.getElementById("staffBody");
+      tbody.innerHTML = "";
+      staff.forEach((s, index) => {
+        tbody.innerHTML += `<tr>
+          <td>${index + 1}</td>
+          <td>${s.name}</td>
+          <td>${s.position}</td>
+          <td>${s.dob}</td>
+          <td><button onclick="deleteStaff(${index})">❌</button></td>
+        </tr>`;
+      });
+      localStorage.setItem("staffList", JSON.stringify(staff));
+    }
+
+    function addStaff() {
+      const name = document.getElementById("name").value;
+      const position = document.getElementById("position").value;
+      const dob = document.getElementById("dob").value;
+      if (name && position && dob) {
+        staff.push({ name, position, dob });
+        renderTable();
+        document.getElementById("name").value = "";
+        document.getElementById("position").value = "";
+        document.getElementById("dob").value = "";
+      } else {
+        alert("အချက်အလက်အားလုံးဖြည့်ပါ");
+      }
+    }
+
+    function deleteStaff(index) {
+      if (confirm("ဖျက်မှာသေချာလား?")) {
+        staff.splice(index, 1);
+        renderTable();
+      }
+    }
+
+    function filterTable() {
+      const input = document.getElementById("searchInput").value.toLowerCase();
+      const rows = document.querySelectorAll("#staffBody tr");
+      rows.forEach(row => {
+        const name = row.children[1].textContent.toLowerCase();
+        row.style.display = name.includes(input) ? "" : "none";
+      });
+    }
+
+    renderTable();
+  </script>
+</body>
+</html>

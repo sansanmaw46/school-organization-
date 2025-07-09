@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <title>ကျောင်းသားစာရင်း</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    input, select {
+      padding: 8px;
+      margin: 5px;
+    }
+    .form-container {
+      margin: 20px auto;
+      width: 90%;
+      text-align: left;
+    }
+    .search-box {
+      margin: 10px auto;
+      width: 90%;
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+  <h2>ကျောင်းသားစာရင်း</h2>
+
+  <div class="search-box">
+    🔍 <input type="text" id="searchInput" placeholder="အမည်ဖြင့်ရှာရန်..." onkeyup="filterTable()">
+  </div>
+
+  <table id="studentTable">
+    <thead>
+      <tr>
+        <th>စဉ်</th>
+        <th>အမည်</th>
+        <th>အတန်း</th>
+        <th>မွေးနေ့</th>
+        <th>ဖျက်ရန်</th>
+      </tr>
+    </thead>
+    <tbody id="studentBody">
+      <!-- rows will be injected by JavaScript -->
+    </tbody>
+  </table>
+
+  <div class="form-container">
+    <h3>➕ ကျောင်းသားအသစ်ထည့်ရန်</h3>
+    <input type="text" id="name" placeholder="အမည်">
+    <input type="text" id="grade" placeholder="အတန်း">
+    <input type="date" id="dob">
+    <button onclick="addStudent()">ထည့်မည်</button>
+  </div>
+
+  <button onclick="history.back()">🔙 နောက်သို့</button>
+
+  <script>
+    // ✅ Get or initialize student list
+    let students = JSON.parse(localStorage.getItem("studentList")) || [];
+
+    function renderTable() {
+      const tbody = document.getElementById("studentBody");
+      tbody.innerHTML = "";
+      students.forEach((student, index) => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${student.name}</td>
+            <td>${student.grade}</td>
+            <td>${student.dob}</td>
+            <td><button onclick="deleteStudent(${index})">❌</button></td>
+          </tr>`;
+      });
+      localStorage.setItem("studentList", JSON.stringify(students));
+    }
+
+    function addStudent() {
+      const name = document.getElementById("name").value;
+      const grade = document.getElementById("grade").value;
+      const dob = document.getElementById("dob").value;
+      if (name && grade && dob) {
+        students.push({ name, grade, dob });
+        renderTable();
+        document.getElementById("name").value = "";
+        document.getElementById("grade").value = "";
+        document.getElementById("dob").value = "";
+      } else {
+        alert("အချက်အလက်အားလုံးဖြည့်ပါ");
+      }
+    }
+
+    function deleteStudent(index) {
+      if (confirm("ဖျက်မှာသေချာလား?")) {
+        students.splice(index, 1);
+        renderTable();
+      }
+    }
+
+    function filterTable() {
+      const input = document.getElementById("searchInput").value.toLowerCase();
+      const rows = document.querySelectorAll("#studentBody tr");
+      rows.forEach(row => {
+        const name = row.children[1].textContent.toLowerCase();
+        row.style.display = name.includes(input) ? "" : "none";
+      });
+    }
+
+    renderTable();
+  </script>
+</body>
+</html>

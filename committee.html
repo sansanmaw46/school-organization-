@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <title>ကျောင်းအကျိုးတော်ဆောင်အဖွဲ့</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    input { padding: 8px; margin: 5px; }
+    .form-container, .search-box { width: 90%; margin: auto; text-align: left; }
+    .search-box { text-align: right; }
+  </style>
+</head>
+<body>
+  <h2>ကျောင်းအကျိုးတော်ဆောင်အဖွဲ့</h2>
+
+  <div class="search-box">
+    🔍 <input type="text" id="searchInput" placeholder="အမည်ဖြင့်ရှာရန်..." onkeyup="filterTable()">
+  </div>
+
+  <table id="committeeTable">
+    <thead>
+      <tr>
+        <th>စဉ်</th>
+        <th>အမည်</th>
+        <th>တာဝန်</th>
+        <th>ဖုန်း</th>
+        <th>ဖျက်ရန်</th>
+      </tr>
+    </thead>
+    <tbody id="committeeBody"></tbody>
+  </table>
+
+  <div class="form-container">
+    <h3>➕ အဖွဲ့ဝင်အသစ်ထည့်ရန်</h3>
+    <input type="text" id="name" placeholder="အမည်">
+    <input type="text" id="role" placeholder="တာဝန်">
+    <input type="text" id="phone" placeholder="ဖုန်းနံပါတ်">
+    <button onclick="addMember()">ထည့်မည်</button>
+  </div>
+
+  <button onclick="history.back()">🔙 နောက်သို့</button>
+
+  <script>
+    let committee = JSON.parse(localStorage.getItem("committeeList")) || [
+      { name: "ကိုကို", role: "ဥက္ကဋ္ဌ", phone: "၀၉-xxxxxxx" },
+      { name: "ဒေါ်ခင်ခင်", role: "အတွင်းရေးမှူး", phone: "၀၉-xxxxxxx" }
+    ];
+
+    function renderTable() {
+      const tbody = document.getElementById("committeeBody");
+      tbody.innerHTML = "";
+      committee.forEach((m, index) => {
+        tbody.innerHTML += `<tr>
+          <td>${index + 1}</td>
+          <td>${m.name}</td>
+          <td>${m.role}</td>
+          <td>${m.phone}</td>
+          <td><button onclick="deleteMember(${index})">❌</button></td>
+        </tr>`;
+      });
+      localStorage.setItem("committeeList", JSON.stringify(committee));
+    }
+
+    function addMember() {
+      const name = document.getElementById("name").value;
+      const role = document.getElementById("role").value;
+      const phone = document.getElementById("phone").value;
+      if (name && role && phone) {
+        committee.push({ name, role, phone });
+        renderTable();
+        document.getElementById("name").value = "";
+        document.getElementById("role").value = "";
+        document.getElementById("phone").value = "";
+      } else {
+        alert("အချက်အလက်အားလုံးဖြည့်ပါ");
+      }
+    }
+
+    function deleteMember(index) {
+      if (confirm("ဖျက်မှာသေချာလား?")) {
+        committee.splice(index, 1);
+        renderTable();
+      }
+    }
+
+    function filterTable() {
+      const input = document.getElementById("searchInput").value.toLowerCase();
+      const rows = document.querySelectorAll("#committeeBody tr");
+      rows.forEach(row => {
+        const name = row.children[1].textContent.toLowerCase();
+        row.style.display = name.includes(input) ? "" : "none";
+      });
+    }
+
+    renderTable();
+  </script>
+</body>
+</html>
