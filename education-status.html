@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <title>အ.မ.က-ရွာသာညွန့်(၂)၊ ပညာရေး အခြေအနေပြဇယား</title>
+  <style>
+    body {
+      font-family: Pyidaungsu, sans-serif;
+      background-color: #f8fcff;
+      padding: 20px;
+      font-size: 16px;
+      text-align: center;
+    }
+    h2 {
+      font-size: 32px;
+      color: #2d4c70;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    th, td {
+      border: 1px solid #aaa;
+      padding: 6px;
+      text-align: center;
+    }
+    th {
+      background-color: #dff0ff;
+      font-weight: bold;
+    }
+    input {
+      padding: 6px;
+      margin: 4px;
+      font-size: 14px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 8px 16px;
+      margin: 10px;
+      font-size: 14px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #2c81ba;
+    }
+    .form-container {
+      margin: 20px auto;
+      max-width: 1000px;
+      text-align: left;
+    }
+    .back-button {
+      display: block;
+      margin: 20px auto;
+    }
+  </style>
+</head>
+<body>
+  <h2>အ.မ.က-ရွာသာညွန့်(၂)<br>ပညာရေး အခြေအနေပြဇယား</h2>
+
+  <table id="statusTable">
+    <thead>
+      <tr>
+        <th rowspan="2">စဉ်</th>
+        <th rowspan="2">အတန်း</th>
+        <th colspan="4">၂၀၂၂-၂၃ ပညာသင်နှစ်</th>
+        <th colspan="4">၂၀၂၃-၂၄ ပညာသင်နှစ်</th>
+        <th colspan="4">၂၀၂၄-၂၅ ပညာသင်နှစ်</th>
+        <th rowspan="2">ဖျက်ရန်</th>
+      </tr>
+      <tr>
+        <th>ရှိ</th><th>ဖြေ</th><th>အောင်</th><th>ရာနှုန်း</th>
+        <th>ရှိ</th><th>ဖြေ</th><th>အောင်</th><th>ရာနှုန်း</th>
+        <th>ရှိ</th><th>ဖြေ</th><th>အောင်</th><th>ရာနှုန်း</th>
+      </tr>
+    </thead>
+    <tbody id="statusBody"></tbody>
+  </table>
+
+  <div class="form-container">
+    <h3>➕ အသစ်ထည့်ရန်</h3>
+    <input type="text" id="grade" placeholder="အတန်း">
+    <input type="number" id="a_exist" placeholder="၂၀၂၂-၂၃ ရှိ">
+    <input type="number" id="a_exam" placeholder="ဖြေ">
+    <input type="number" id="a_pass" placeholder="အောင်">
+    <input type="number" id="a_percent" placeholder="ရာနှုန်း">
+    <input type="number" id="b_exist" placeholder="၂၀၂၃-၂၄ ရှိ">
+    <input type="number" id="b_exam" placeholder="ဖြေ">
+    <input type="number" id="b_pass" placeholder="အောင်">
+    <input type="number" id="b_percent" placeholder="ရာနှုန်း">
+    <input type="number" id="c_exist" placeholder="၂၀၂၄-၂၅ ရှိ">
+    <input type="number" id="c_exam" placeholder="ဖြေ">
+    <input type="number" id="c_pass" placeholder="အောင်">
+    <input type="number" id="c_percent" placeholder="ရာနှုန်း">
+    <button onclick="addStatus()">ထည့်မည်</button>
+  </div>
+
+  <button class="back-button" onclick="history.back()">🔙 နောက်သို့</button>
+
+  <script>
+    let statusList = JSON.parse(localStorage.getItem("educationStatusList")) || [];
+
+    function renderTable() {
+      const tbody = document.getElementById("statusBody");
+      tbody.innerHTML = "";
+      statusList.forEach((s, index) => {
+        tbody.innerHTML += `<tr>
+          <td>${index + 1}</td>
+          <td>${s.grade}</td>
+          <td>${s.a_exist}</td><td>${s.a_exam}</td><td>${s.a_pass}</td><td>${s.a_percent}</td>
+          <td>${s.b_exist}</td><td>${s.b_exam}</td><td>${s.b_pass}</td><td>${s.b_percent}</td>
+          <td>${s.c_exist}</td><td>${s.c_exam}</td><td>${s.c_pass}</td><td>${s.c_percent}</td>
+          <td><button onclick="deleteStatus(${index})">❌</button></td>
+        </tr>`;
+      });
+      localStorage.setItem("educationStatusList", JSON.stringify(statusList));
+    }
+
+    function addStatus() {
+      const s = {
+        grade: document.getElementById("grade").value,
+        a_exist: document.getElementById("a_exist").value,
+        a_exam: document.getElementById("a_exam").value,
+        a_pass: document.getElementById("a_pass").value,
+        a_percent: document.getElementById("a_percent").value,
+        b_exist: document.getElementById("b_exist").value,
+        b_exam: document.getElementById("b_exam").value,
+        b_pass: document.getElementById("b_pass").value,
+        b_percent: document.getElementById("b_percent").value,
+        c_exist: document.getElementById("c_exist").value,
+        c_exam: document.getElementById("c_exam").value,
+        c_pass: document.getElementById("c_pass").value,
+        c_percent: document.getElementById("c_percent").value
+      };
+      if (s.grade) {
+        statusList.push(s);
+        renderTable();
+        document.querySelectorAll("input").forEach(input => input.value = "");
+      } else {
+        alert("အတန်း ပြည့်စုံဖြည့်ပါ");
+      }
+    }
+
+    function deleteStatus(index) {
+      if (confirm("ဖျက်မှာသေချာလား?")) {
+        statusList.splice(index, 1);
+        renderTable();
+      }
+    }
+
+    renderTable();
+  </script>
+</body>
+</html>

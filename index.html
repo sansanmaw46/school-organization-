@@ -2,16 +2,89 @@
 <html lang="my">
 <head>
   <meta charset="UTF-8">
-  <title>ကျောင်းစာရင်းစီမံခန့်ခွဲမှု</title>
-  <link rel="stylesheet" href="style.css">
+  <title>School Data</title>
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    body {
+      font-size: 50px;
+      font-family: 'Pyidaungsu', sans-serif;
+      background-color: #e6f0ff;
+      color: #009966;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    h2 {
+      padding: 15px;
+      font-weight: bold;
+    }
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 20px auto;
+      max-width: 90%;
+    }
+    .menu button {
+      font-size: 45px;
+      padding: 12px 20px;
+      background-color: #ffffff;
+      color: #009966;
+      border: 2px solid #009966;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.3s ease;
+    }
+    .menu button:hover {
+      background-color: #ccf2e2;
+    }
+    .menu i {
+      margin-right: 10px;
+    }
+  </style>
 </head>
 <body>
-  <h1> 📚 အ.မ.က-ရွာသာညွန့်(၂)
-  </h1>
+  <h2>📘 အ.မ.က-ရွာသာညွန့်(၂)</h2>
+
   <div class="menu">
-    <button onclick="location.href='staff.html'">၁။ ပညာရေးဝန်ထမ်းအင်အားစာရင်း</button>
-    <button onclick="location.href='students.html'">၂။ ကျောင်းသားစာရင်း</button>
-    <button onclick="location.href='committee.html'">၃။ ကျောင်းအကျိုးတော်ဆောင်အဖွဲ့</button>
+    <button onclick="location.href='staff.html'">
+      <i class="fa-solid fa-users"></i> ၁။ ပညာရေးဝန်ထမ်း အင်အားစာရင်း
+    </button>
+    <button onclick="location.href='students.html'">
+      <i class="fa-solid fa-user-graduate"></i> ၂။ ကျောင်းသား အင်အားစာရင်း
+    </button>
+    <button onclick="location.href='committee.html'">
+      <i class="fa-solid fa-people-group"></i> ၃။ ကျောင်းအကျိုးဆောင်အဖွဲ့
+    </button>
+    <button onclick="location.href='income.html'">
+      <i class="fa-solid fa-sack-dollar"></i> ၄။ ကျောင်းထောက်ပံ့ကြေး ကော်မတီ
+    </button>
+    <button onclick="location.href='agreement.html'">
+      <i class="fa-solid fa-scroll"></i> ၅။ ကျောင်းထောက်ပံ့ကြေး လျာထားချက်
+    </button>
+    <button onclick="location.href='education-status.html'">
+      <i class="fa-solid fa-chart-column"></i> ၆။ ပညာရေး အခြေအနေပြဇယား
+    </button>
+    <button onclick="location.href='timetable.html'">
+      <i class="fa-solid fa-calendar-days"></i> ၇။ အတန်းလိုက် အချိန်စာရင်း
+    </button>
+    <button onclick="location.href='donation.html'">
+      <i class="fa-solid fa-landmark-dome"></i> ၈။ ကျောင်းမြေနေရာ အလှူရှင်များ
+    </button>
   </div>
 </body>
 </html>
+<!-- Inside your existing .menu container -->
+
+<div class="menu">
+  <!-- Existing buttons (၁–၈) remain unchanged -->
+
+  <button onclick="location.href='nutrition.html'">
+    <i class="fa-solid fa-utensils"></i> ၉။ အာဟာရဒါန အလှူရှင်စာရင်း
+  </button>
+  <button onclick="location.href='meeting.html'">
+    <i class="fa-solid fa-file-lines"></i> ၁၀။ ကျောင်းအစည်းဝေးပွဲ မှတ်တမ်း
+  </button>
+</div>

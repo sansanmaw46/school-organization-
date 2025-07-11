@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <title>ကျောင်းအစည်းအဝေးပွဲ မှတ်တမ်း</title>
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    body {
+      font-family: Pyidaungsu, sans-serif;
+      background-color: #f0fff5;
+      padding: 20px;
+      text-align: center;
+      color: #009933; /* ✅ အစိမ်းရောင် Font */
+    }
+    h2 {
+      font-size: 50px;
+      margin-bottom: 30px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    th, td {
+      border: 1px solid #aaa;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #ccfce2;
+      font-weight: bold;
+    }
+    input {
+      padding: 6px;
+      margin: 5px;
+      font-size: 14px;
+      width: 95%;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 8px 16px;
+      margin: 10px;
+      font-size: 16px;
+      background-color: #009933;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #007a2f;
+    }
+    .form-container {
+      margin: 20px auto;
+      max-width: 600px;
+      text-align: left;
+    }
+    .back-button {
+      display: block;
+      margin: 30px auto;
+    }
+  </style>
+</head>
+<body>
+  <h2><i class="fa-solid fa-calendar-days"></i> ကျောင်းအစည်းအဝေးပွဲ မှတ်တမ်း</h2>
+
+  <table id="meetingTable">
+    <thead>
+      <tr>
+        <th>စဉ်</th>
+        <th>အကြောင်းအရာ</th>
+        <th>နေ့ရက်</th>
+        <th>အချိန်</th>
+        <th>နေရာ</th>
+        <th>ဖျက်ရန်</th>
+      </tr>
+    </thead>
+    <tbody id="meetingBody"></tbody>
+  </table>
+
+  <div class="form-container">
+    <h3>➕ အသစ်ထည့်ရန်</h3>
+    <input type="text" id="topic" placeholder="အကြောင်းအရာ">
+    <input type="date" id="date" placeholder="နေ့ရက်">
+    <input type="time" id="time" placeholder="အချိန်">
+    <input type="text" id="location" placeholder="နေရာ">
+    <button onclick="addMeeting()">ထည့်မည်</button>
+  </div>
+
+  <button class="back-button" onclick="history.back()">🔙 နောက်သို့</button>
+
+  <script>
+    let meetings = JSON.parse(localStorage.getItem("meetingList")) || [];
+
+    function renderTable() {
+      const tbody = document.getElementById("meetingBody");
+      tbody.innerHTML = "";
+      meetings.forEach((m, index) => {
+        tbody.innerHTML += `<tr>
+          <td>${index + 1}</td>
+          <td>${m.topic}</td>
+          <td>${m.date}</td>
+          <td>${m.time}</td>
+          <td>${m.location}</td>
+          <td><button onclick="deleteMeeting(${index})">❌</button></td>
+        </tr>`;
+      });
+      localStorage.setItem("meetingList", JSON.stringify(meetings));
+    }
+
+    function addMeeting() {
+      const topic = document.getElementById("topic").value;
+      const date = document.getElementById("date").value;
+      const time = document.getElementById("time").value;
+      const location = document.getElementById("location").value;
+      if (topic && date && time && location) {
+        meetings.push({ topic, date, time, location });
+        renderTable();
+        document.querySelectorAll("input").forEach(input => input.value = "");
+      } else {
+        alert("အချက်အလက်အားလုံး ဖြည့်ပါ");
+      }
+    }
+
+    function deleteMeeting(index) {
+      if (confirm("ဖျက်မှာသေချာလား?")) {
+        meetings.splice(index, 1);
+        renderTable();
+      }
+    }
+
+    renderTable();
+  </script>
+</body>
+</html>

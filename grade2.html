@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8" />
+  <title>ဒုတိယတန်း အချိန်စာရင်း</title>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+  <style>
+    body {
+      font-family: Pyidaungsu, sans-serif;
+      background-color: #eef7ff;
+      padding: 20px;
+      text-align: center;
+      color: #0066cc;
+    }
+    h2 {
+      font-size: 50px;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin-bottom: 30px;
+    }
+    th,
+    td {
+      border: 1px solid #aaa;
+      padding: 6px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    th.cross {
+      background: linear-gradient(135deg, #d6eaff 49.5%, #eef7ff 50%);
+      position: relative;
+      height: 50px;
+    }
+    th.cross::before {
+      content: "နေ့ရက်";
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      font-weight: bold;
+      font-size: 13px;
+    }
+    th.cross::after {
+      content: "အချိန်";
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      font-weight: bold;
+      font-size: 13px;
+    }
+    th {
+      background-color: #d6eaff;
+      font-weight: bold;
+    }
+    input {
+      padding: 6px;
+      margin: 4px;
+      font-size: 14px;
+      width: 90%;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 8px 16px;
+      margin: 10px;
+      font-size: 14px;
+      background-color: #0066cc;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #004d99;
+    }
+    .form-container {
+      margin: 20px auto;
+      max-width: 700px;
+      text-align: left;
+    }
+    .back-button {
+      display: block;
+      margin: 30px auto;
+    }
+  </style>
+</head>
+<body>
+  <h2><i class="fa-solid fa-book-open-reader"></i> ဒုတိယတန်း အချိန်စာရင်း</h2>
+
+  <table id="grade2Table">
+    <thead>
+      <tr>
+        <th class="cross"></th>
+        <th>၁</th>
+        <th>၂</th>
+        <th>၃</th>
+        <th>၄</th>
+        <th>၅</th>
+        <th>၆</th>
+        <th>၇</th>
+        <th>ဖျက်ရန်</th>
+      </tr>
+    </thead>
+    <tbody id="grade2Body"></tbody>
+  </table>
+
+  <div class="form-container">
+    <h3>➕ အချိန်ဇယားထည့်ရန်</h3>
+    <input type="text" id="day" placeholder="နေ့ရက်">
+    <input type="text" id="time" placeholder="အချိန်">
+    <input type="text" id="p1" placeholder="၁">
+    <input type="text" id="p2" placeholder="၂">
+    <input type="text" id="p3" placeholder="၃">
+    <input type="text" id="p4" placeholder="၄">
+    <input type="text" id="p5" placeholder="၅">
+    <input type="text" id="p6" placeholder="၆">
+    <input type="text" id="p7" placeholder="၇">
+    <button onclick="addSchedule()">ထည့်မည်</button>
+  </div>
+
+  <button class="back-button" onclick="history.back()">🔙 နောက်သို့</button>
+
+  <script>
+    let schedule = JSON.parse(localStorage.getItem("grade2Schedule")) || [];
+
+    function renderTable() {
+      const tbody = document.getElementById("grade2Body");
+      tbody.innerHTML = "";
+      schedule.forEach((row, index) => {
+        tbody.innerHTML += `<tr>
+          <td>${row.day}<br>${row.time}</td>
+          <td>${row.p1}</td>
+          <td>${row.p2}</td>
+          <td>${row.p3}</td>
+          <td>${row.p4}</td>
+          <td>${row.p5}</td>
+          <td>${row.p6}</td>
+          <td>${row.p7}</td>
+          <td><button onclick="deleteSchedule(${index})">❌</button></td>
+        </tr>`;
+      });
+      localStorage.setItem("grade2Schedule", JSON.stringify(schedule));
+    }
+
+    function addSchedule() {
+      const day = document.getElementById("day").value.trim();
+      const time = document.getElementById("time").value.trim();
+
+      if (!day || !time) {
+        alert("နေ့ရက်နဲ့အချိန် ဖြည့်ရန်လိုပါတယ်!");
+        return;
+      }
+
+      const row = {
+        day,
+        time,
+        p1: document.getElementById("p1").value.trim(),
+        p2: document.getElementById("p2").value.trim(),
+        p3: document.getElementById("p3").value.trim(),
+        p4: document.getElementById("p4").value.trim(),
+        p5: document.getElementById("p5").value.trim(),
+        p6: document.getElementById("p6").value.trim(),
+        p7: document.getElementById("p7").value.trim()
+      };
+
+      schedule.push(row);
+      renderTable();
+      document.querySelectorAll("input").forEach(input => input.value = "");
+    }
+
+    function deleteSchedule(index) {
+      if (confirm("ဖျက်မှာသေချာလား?")) {
+        schedule.splice(index, 1);
+        renderTable();
+      }
+    }
+
+    renderTable();
+  </script>
+</body>
+</html>

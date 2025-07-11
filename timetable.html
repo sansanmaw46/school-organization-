@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <title>အတန်းလိုက် အချိန်စာရင်း</title>
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    body {
+      font-family: Pyidaungsu, sans-serif;
+      background-color: #f0fff5;
+      padding: 20px;
+      color: #009933;
+      text-align: center;
+      font-size: 18px;
+    }
+    h2 {
+      font-size: 50px; /* ✅ Title Font */
+      margin-bottom: 30px;
+    }
+    .class-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-width: 500px;
+      margin: 0 auto 40px auto;
+    }
+    .class-buttons button {
+      font-size: 40px; /* ✅ Button Font */
+      padding: 14px;
+      background-color: white;
+      color: #009933;
+      border: 2px solid #009933;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      justify-content: flex-start;
+    }
+    .class-buttons button:hover {
+      background-color: #ccfce2;
+    }
+    .back-button {
+      font-size: 20px;
+      padding: 10px 24px;
+      background-color: #009933;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .back-button:hover {
+      background-color: #008a2e;
+    }
+  </style>
+</head>
+<body>
+  <h2>📋 အတန်းလိုက် အချိန်စာရင်း</h2>
+
+  <div class="class-buttons">
+    <button onclick="location.href='kg.html'">
+      <i class="fa-solid fa-child-reaching"></i> သူငယ်တန်း
+    </button>
+    <button onclick="location.href='grade1.html'">
+      <i class="fa-solid fa-1"></i> ပထမတန်း
+    </button>
+    <button onclick="location.href='grade2.html'">
+      <i class="fa-solid fa-2"></i> ဒုတိယတန်း
+    </button>
+    <button onclick="location.href='grade3.html'">
+      <i class="fa-solid fa-3"></i> တတိယတန်း
+    </button>
+    <button onclick="location.href='grade4.html'">
+      <i class="fa-solid fa-4"></i> စတုတ္ထတန်း
+    </button>
+    <button onclick="location.href='grade5.html'">
+      <i class="fa-solid fa-5"></i> ပဉ္စမတန်း
+    </button>
+  </div>
+
+  <button class="back-button" onclick="history.back()">🔙 နောက်သို့</button>
+</body>
+</html>

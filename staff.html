@@ -2,20 +2,57 @@
 <html lang="my">
 <head>
   <meta charset="UTF-8">
-  <title>ပညာရေးဝန်ထမ်းစာရင်း</title>
-  <link rel="stylesheet" href="style.css">
+  <title>ဝန်ထမ်းအင်အားစာရင်း</title>
   <style>
-    input { padding: 8px; margin: 5px; }
-    .form-container, .search-box { width: 90%; margin: auto; text-align: left; }
-    .search-box { text-align: right; }
+    body {
+      font-family: Pyidaungsu, sans-serif;
+      background-color: #f2f9ff;
+      padding: 20px;
+      font-size: 16px;
+    }
+    h2 {
+      color: #2d4c70;
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+    th, td {
+      border: 1px solid #aaa;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #dff0ff;
+      font-weight: bold;
+    }
+    input {
+      padding: 6px;
+      margin: 5px;
+      width: 95%;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 10px;
+      font-size: 16px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
   </style>
 </head>
 <body>
-  <h2>ပညာရေးဝန်ထမ်းအင်အားစာရင်း</h2>
-
-  <div class="search-box">
-    🔍 <input type="text" id="searchInput" placeholder="အမည်ဖြင့်ရှာရန်..." onkeyup="filterTable()">
-  </div>
+  <h2>📋 ဝန်ထမ်းအင်အားစာရင်း</h2>
 
   <table id="staffTable">
     <thead>
@@ -23,28 +60,35 @@
         <th>စဉ်</th>
         <th>အမည်</th>
         <th>ရာထူး</th>
-        <th>မွေးနေ့</th>
+        <th>ပညာအရည်အချင်း</th>
+        <th>အဖအမည်</th>
+        <th>မွေးသက္ကရာဇ်</th>
+        <th>မှတ်ပုံတင်အမှတ်</th>
+        <th>ပညာရေးဌာန စတင်အမှုထမ်းသည့်‌နေ့</th>
+        <th>လက်ရှိကျောင်းတွင် ဝင်သည့်‌နေ့</th>
+        <th>သက်ပြည့်ပင်စင်ယူသည့်နေ့</th>
         <th>ဖျက်ရန်</th>
       </tr>
     </thead>
     <tbody id="staffBody"></tbody>
   </table>
 
-  <div class="form-container">
-    <h3>➕ ဝန်ထမ်းအသစ်ထည့်ရန်</h3>
+  <h3>➕ ဝန်ထမ်းအသစ် ထည့်ရန်</h3>
+  <div>
     <input type="text" id="name" placeholder="အမည်">
     <input type="text" id="position" placeholder="ရာထူး">
-    <input type="date" id="dob">
+    <input type="text" id="education" placeholder="ပညာအရည်အချင်း">
+    <input type="text" id="father" placeholder="အဖအမည်">
+    <input type="date" id="dob" placeholder="မွေးသက္ကရာဇ်">
+    <input type="text" id="nrc" placeholder="မှတ်ပုံတင်အမှတ်">
+    <input type="date" id="joinEduDate" placeholder="ပညာရေးဌာန စတင်ဝင်သည့်နေ့">
+    <input type="date" id="joinSchoolDate" placeholder="လက်ရှိကျောင်း ဝင်သည့်နေ့">
+    <input type="date" id="retireDate" placeholder="သက်ပြည့်ပင်စင်ယူသည့်နေ့">
     <button onclick="addStaff()">ထည့်မည်</button>
   </div>
 
-  <button onclick="history.back()">🔙 နောက်သို့</button>
-
   <script>
-    let staff = JSON.parse(localStorage.getItem("staffList")) || [
-      { name: "မောင်မောင်", position: "အုပ်ချုပ်ရေးမှူး", dob: "1980-05-12" },
-      { name: "ခင်မြင့်", position: "အထွေထွေဝန်ထမ်း", dob: "1985-08-23" }
-    ];
+    let staff = JSON.parse(localStorage.getItem("staffList")) || [];
 
     function renderTable() {
       const tbody = document.getElementById("staffBody");
@@ -54,7 +98,13 @@
           <td>${index + 1}</td>
           <td>${s.name}</td>
           <td>${s.position}</td>
+          <td>${s.education}</td>
+          <td>${s.father}</td>
           <td>${s.dob}</td>
+          <td>${s.nrc}</td>
+          <td>${s.joinEduDate}</td>
+          <td>${s.joinSchoolDate}</td>
+          <td>${s.retireDate}</td>
           <td><button onclick="deleteStaff(${index})">❌</button></td>
         </tr>`;
       });
@@ -62,34 +112,31 @@
     }
 
     function addStaff() {
-      const name = document.getElementById("name").value;
-      const position = document.getElementById("position").value;
-      const dob = document.getElementById("dob").value;
-      if (name && position && dob) {
-        staff.push({ name, position, dob });
+      const s = {
+        name: document.getElementById("name").value,
+        position: document.getElementById("position").value,
+        education: document.getElementById("education").value,
+        father: document.getElementById("father").value,
+        dob: document.getElementById("dob").value,
+        nrc: document.getElementById("nrc").value,
+        joinEduDate: document.getElementById("joinEduDate").value,
+        joinSchoolDate: document.getElementById("joinSchoolDate").value,
+        retireDate: document.getElementById("retireDate").value
+      };
+      if (s.name && s.position) {
+        staff.push(s);
         renderTable();
-        document.getElementById("name").value = "";
-        document.getElementById("position").value = "";
-        document.getElementById("dob").value = "";
+        document.querySelectorAll("input").forEach(input => input.value = "");
       } else {
-        alert("အချက်အလက်အားလုံးဖြည့်ပါ");
+        alert("အမည်နဲ့ရာထူး မဖြည့်သေးပါ!");
       }
     }
 
     function deleteStaff(index) {
-      if (confirm("ဖျက်မှာသေချာလား?")) {
+      if (confirm("ဤဝန်ထမ်းအားဖျက်မှာသေချာလား?")) {
         staff.splice(index, 1);
         renderTable();
       }
-    }
-
-    function filterTable() {
-      const input = document.getElementById("searchInput").value.toLowerCase();
-      const rows = document.querySelectorAll("#staffBody tr");
-      rows.forEach(row => {
-        const name = row.children[1].textContent.toLowerCase();
-        row.style.display = name.includes(input) ? "" : "none";
-      });
     }
 
     renderTable();

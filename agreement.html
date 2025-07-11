@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <title>ကျောင်းထောက်ပံ့ကြေး လျာထားချက်</title>
+  <style>
+    body {
+      font-family: Pyidaungsu, sans-serif;
+      background-color: #f0fbff;
+      padding: 20px;
+      font-size: 16px;
+      text-align: center;
+    }
+    h2 {
+      font-size: 32px;
+      color: #2d4c70;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+    th, td {
+      border: 1px solid #aaa;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #dff0ff;
+      font-weight: bold;
+    }
+    input {
+      padding: 8px;
+      margin: 5px;
+      width: 90%;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 8px;
+      font-size: 16px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #2c81ba;
+    }
+    .form-container {
+      margin: 20px auto;
+      width: 90%;
+      text-align: left;
+    }
+    .back-button {
+      display: block;
+      margin: 20px auto;
+    }
+  </style>
+</head>
+<body>
+  <h2>ကျောင်းထောက်ပံ့ကြေး လျာထားချက်</h2>
+
+  <table id="budgetTable">
+    <thead>
+      <tr>
+        <th>စဉ်</th>
+        <th>ငွေစာရင်းခေါင်းစဉ်</th>
+        <th>လျာထားချက်</th>
+        <th>သုံးစွဲ</th>
+        <th>လက်ကျန်</th>
+        <th>မှတ်ချက်</th>
+        <th>ဖျက်ရန်</th>
+      </tr>
+    </thead>
+    <tbody id="budgetBody"></tbody>
+  </table>
+
+  <div class="form-container">
+    <h3>➕ အသစ်ထည့်ရန်</h3>
+    <input type="text" id="title" placeholder="ငွေစာရင်းခေါင်းစဉ်">
+    <input type="number" id="estimated" placeholder="လျာထားချက်">
+    <input type="number" id="spent" placeholder="သုံးစွဲ">
+    <input type="text" id="note" placeholder="မှတ်ချက်">
+    <button onclick="addItem()">ထည့်မည်</button>
+  </div>
+
+  <button class="back-button" onclick="history.back()">🔙 နောက်သို့</button>
+
+  <script>
+    let budgetList = JSON.parse(localStorage.getItem("budgetList")) || [];
+
+    function renderTable() {
+      const tbody = document.getElementById("budgetBody");
+      tbody.innerHTML = "";
+      budgetList.forEach((b, index) => {
+        const balance = b.estimated - b.spent;
+        tbody.innerHTML += `<tr>
+          <td>${index + 1}</td>
+          <td>${b.title}</td>
+          <td>${b.estimated}</td>
+          <td>${b.spent}</td>
+          <td>${balance}</td>
+          <td>${b.note}</td>
+          <td><button onclick="deleteItem(${index})">❌</button></td>
+        </tr>`;
+      });
+      localStorage.setItem("budgetList", JSON.stringify(budgetList));
+    }
+
+    function addItem() {
+      const title = document.getElementById("title").value;
+      const estimated = parseFloat(document.getElementById("estimated").value);
+      const spent = parseFloat(document.getElementById("spent").value);
+      const note = document.getElementById("note").value;
+      if (title && !isNaN(estimated) && !isNaN(spent)) {
+        budgetList.push({ title, estimated, spent, note });
+        renderTable();
+        document.querySelectorAll("input").forEach(input => input.value = "");
+      } else {
+        alert("ခေါင်းစဉ်၊ လျာထားချက်၊ သုံးစွဲ ပြည့်စုံဖြည့်ပေးပါ");
+      }
+    }
+
+    function deleteItem(index) {
+      if (confirm("ဖျက်မှာသေချာလား?")) {
+        budgetList.splice(index, 1);
+        renderTable();
+      }
+    }
+
+    renderTable();
+  </script>
+</body>
+</html>

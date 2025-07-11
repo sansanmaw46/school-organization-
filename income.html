@@ -2,11 +2,11 @@
 <html lang="my">
 <head>
   <meta charset="UTF-8">
-  <title>ကျောင်းအကျိုးဆောင်အဖွဲ့</title>
+  <title>ကျောင်းထောက်ပံ့ကြေး ကော်မတီ</title>
   <style>
     body {
       font-family: Pyidaungsu, sans-serif;
-      background-color: #f5fbff;
+      background-color: #f0fbff;
       padding: 20px;
       font-size: 16px;
       text-align: center;
@@ -20,6 +20,7 @@
       width: 100%;
       border-collapse: collapse;
       margin-bottom: 20px;
+      font-size: 16px;
     }
     th, td {
       border: 1px solid #aaa;
@@ -27,7 +28,8 @@
       text-align: center;
     }
     th {
-      background-color: #d0ecff;
+      background-color: #dff0ff;
+      font-weight: bold;
     }
     input {
       padding: 8px;
@@ -38,7 +40,7 @@
     }
     button {
       padding: 10px 20px;
-      margin: 10px;
+      margin: 8px;
       font-size: 16px;
       background-color: #3498db;
       color: white;
@@ -61,9 +63,9 @@
   </style>
 </head>
 <body>
-  <h2>ကျောင်းအကျိုးဆောင်အဖွဲ့</h2>
+  <h2>ကျောင်းထောက်ပံ့ကြေး ကော်မတီ</h2>
 
-  <table id="committeeTable">
+  <table id="incomeTable">
     <thead>
       <tr>
         <th>စဉ်</th>
@@ -73,53 +75,53 @@
         <th>ဖျက်ရန်</th>
       </tr>
     </thead>
-    <tbody id="committeeBody"></tbody>
+    <tbody id="incomeBody"></tbody>
   </table>
 
   <div class="form-container">
-    <h3>➕ အဖွဲ့ဝင်အသစ်ထည့်ရန်</h3>
+    <h3>➕ အသစ်ထည့်ရန်</h3>
     <input type="text" id="name" placeholder="အမည်">
     <input type="text" id="position" placeholder="ရာထူး">
-    <input type="text" id="responsibility" placeholder="တာဝန်">
+    <input type="text" id="task" placeholder="တာဝန်">
     <button onclick="addMember()">ထည့်မည်</button>
   </div>
 
   <button class="back-button" onclick="history.back()">🔙 နောက်သို့</button>
 
   <script>
-    let committee = JSON.parse(localStorage.getItem("committeeList")) || [];
+    let incomeCommittee = JSON.parse(localStorage.getItem("incomeCommitteeList")) || [];
 
     function renderTable() {
-      const tbody = document.getElementById("committeeBody");
+      const tbody = document.getElementById("incomeBody");
       tbody.innerHTML = "";
-      committee.forEach((c, index) => {
+      incomeCommittee.forEach((item, index) => {
         tbody.innerHTML += `<tr>
           <td>${index + 1}</td>
-          <td>${c.name}</td>
-          <td>${c.position}</td>
-          <td>${c.responsibility}</td>
+          <td>${item.name}</td>
+          <td>${item.position}</td>
+          <td>${item.task}</td>
           <td><button onclick="deleteMember(${index})">❌</button></td>
         </tr>`;
       });
-      localStorage.setItem("committeeList", JSON.stringify(committee));
+      localStorage.setItem("incomeCommitteeList", JSON.stringify(incomeCommittee));
     }
 
     function addMember() {
       const name = document.getElementById("name").value;
       const position = document.getElementById("position").value;
-      const responsibility = document.getElementById("responsibility").value;
-      if (name && position && responsibility) {
-        committee.push({ name, position, responsibility });
+      const task = document.getElementById("task").value;
+      if (name && position && task) {
+        incomeCommittee.push({ name, position, task });
         renderTable();
         document.querySelectorAll("input").forEach(input => input.value = "");
       } else {
-        alert("အချက်အလက်အားလုံးဖြည့်ရန်လိုပါတယ်!");
+        alert("အမည်၊ ရာထူး၊ တာဝန် ဖြည့်ရန်လိုပါတယ်!");
       }
     }
 
     function deleteMember(index) {
-      if (confirm("ဤအဖွဲ့ဝင်အား ဖျက်မှာသေချာလား?")) {
-        committee.splice(index, 1);
+      if (confirm("ဖျက်မှာသေချာလား?")) {
+        incomeCommittee.splice(index, 1);
         renderTable();
       }
     }
