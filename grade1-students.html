@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <title>ပထမတန်း ကျောင်းသားစာရင်း</title>
+  <style>
+    body {
+      font-family: Pyidaungsu, sans-serif;
+      background-color: #f4fff4;
+      color: #006400;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 40px;
+      margin-bottom: 30px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px auto;
+      font-size: 14px;
+    }
+    th, td {
+      border: 1px solid #aaa;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #eaffea;
+    }
+    input {
+      margin: 6px;
+      padding: 8px;
+      width: 180px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 8px 16px;
+      border-radius: 6px;
+      border: none;
+      background-color: #006400;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    button:hover {
+      background-color: #004d00;
+    }
+    .back-button {
+      margin-top: 30px;
+      background-color: #008000;
+    }
+  </style>
+</head>
+<body>
+  <h1>📘 ပထမတန်း ကျောင်းသားစာရင်း</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>စဉ်</th>
+        <th>အမည်</th>
+        <th>အတန်း</th>
+        <th>အဖအမည်</th>
+        <th>အမိအမည်</th>
+        <th>မွေးသက္ကရာဇ်</th>
+        <th>ဖျက်ရန်</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <div>
+    <h3>➕ ကျောင်းသား အသစ်ထည့်ရန်</h3>
+    <input type="text" id="name" placeholder="အမည်">
+    <input type="text" id="grade" placeholder="အတန်း">
+    <input type="text" id="father" placeholder="အဖအမည်">
+    <input type="text" id="mother" placeholder="အမိအမည်">
+    <input type="date" id="dob">
+    <button onclick="addStudent()">ထည့်မည်</button>
+  </div>
+
+  <button class="back-button" onclick="history.back()">🔙 နောက်သို့</button>
+
+  <script>
+    let grade1List = JSON.parse(localStorage.getItem("grade1List")) || [];
+
+    function renderTable() {
+      const tbody = document.querySelector("tbody");
+      tbody.innerHTML = "";
+      grade1List.forEach((student, index) => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${student.name}</td>
+            <td>${student.grade}</td>
+            <td>${student.father}</td>
+            <td>${student.mother}</td>
+            <td>${student.dob}</td>
+            <td><button onclick="deleteStudent(${index})">❌</button></td>
+          </tr>
+        `;
+      });
+      localStorage.setItem("grade1List", JSON.stringify(grade1List));
+    }
+
+    function addStudent() {
+      const name = document.getElementById("name").value.trim();
+      const grade = document.getElementById("grade").value.trim();
+      const father = document.getElementById("father").value.trim();
+      const mother = document.getElementById("mother").value.trim();
+      const dob = document.getElementById("dob").value;
+      if (!name || !grade || !father || !mother || !dob) {
+        alert("အချက်အလက်မှန်မှန် ဖြည့်ပါ");
+        return;
+      }
+      grade1List.push({ name, grade, father, mother, dob });
+      document.getElementById("name").value = "";
+      document.getElementById("grade").value = "";
+      document.getElementById("father").value = "";
+      document.getElementById("mother").value = "";
+      document.getElementById("dob").value = "";
+      renderTable();
+    }
+
+    function deleteStudent(index) {
+      if (confirm("ဖျက်မှာသေချာလား?")) {
+        grade1List.splice(index, 1);
+        renderTable();
+      }
+    }
+
+    renderTable();
+  </script>
+</body>
+</html>

@@ -2,155 +2,155 @@
 <html lang="my">
 <head>
   <meta charset="UTF-8">
-  <title>ကျောင်းသားအင်အားစာရင်း</title>
+  <title>ကျောင်းသားစာရင်း</title>
   <style>
     body {
       font-family: Pyidaungsu, sans-serif;
-      background-color: #f6fcff;
-      padding: 20px;
-      font-size: 16px;
-    }
-    h2 {
+      background-color: #f5fff0;
+      color: #008000;
       text-align: center;
-      font-size: 32px; /* ✅ အကြီး font */
-      color: #2d4c70;
-      margin-bottom: 10px;
+      padding: 20px;
     }
-    input {
-      padding: 8px;
-      margin: 5px;
-      width: 95%;
-      box-sizing: border-box;
-      font-size: 16px;
+    h1 {
+      font-size: 40px;
+      margin-bottom: 30px;
     }
-    .form-container {
-      margin: 20px auto;
-      width: 90%;
-      text-align: left;
+    .class-links a {
+      display: block;
+      padding: 10px;
+      margin: 6px auto;
+      background-color: #e6ffe6;
+      color: #006400;
+      text-decoration: none;
+      font-size: 20px;
+      border-radius: 6px;
+      width: 250px;
     }
-    .search-box {
-      margin: 10px auto;
-      width: 90%;
-      text-align: right;
+    .class-links a:hover {
+      background-color: #ccffcc;
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 10px;
-      font-size: 16px;
+      margin-top: 30px;
+      font-size: 14px;
     }
     th, td {
       border: 1px solid #aaa;
       padding: 8px;
       text-align: center;
+      vertical-align: middle;
     }
     th {
-      background-color: #def;
+      background-color: #e6ffe6;
       font-weight: bold;
     }
-    button {
-      padding: 8px 16px;
-      margin-top: 8px;
-      font-size: 16px;
-      background-color: #3498db;
+    .back-button {
+      margin-top: 30px;
+      padding: 10px 20px;
+      background-color: #006400;
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
+      font-size: 14px;
       cursor: pointer;
     }
-    button:hover {
-      background-color: #2c81ba;
+    .back-button:hover {
+      background-color: #004d00;
     }
   </style>
 </head>
 <body>
-  <h2>ကျောင်းသားအင်အားစာရင်း</h2>
+  <h1>📘 ကျောင်းသားအင်အားစာရင်း</h1>
 
-  <div class="search-box">
-    🔍 <input type="text" id="searchInput" placeholder="အမည်ဖြင့်ရှာရန်..." onkeyup="filterTable()">
+  <div class="class-links">
+    <a href="kg-students.html">👶 သူငယ်တန်း</a>
+    <a href="grade1-students.html">📗 ပထမတန်း</a>
+    <a href="grade2-students.html">📙 ဒုတိယတန်း</a>
+    <a href="grade3-students.html">📕 တတိယတန်း</a>
+    <a href="grade4-students.html">📒 စတုတ္ထတန်း</a>
+    <a href="grade5-students.html">📚 ပဉ္စမတန်း</a>
   </div>
 
-  <table id="studentTable">
+  <table>
     <thead>
       <tr>
         <th>စဉ်</th>
-        <th>အမည်</th>
         <th>အတန်း</th>
-        <th>အဖအမည်</th>
-        <th>အမိအမည်</th>
-        <th>မွေးသက္ကရာဇ်</th>
+        <th>ကျား</th>
+        <th>မ</th>
+        <th>ပေါင်း</th>
         <th>ဖျက်ရန်</th>
       </tr>
     </thead>
-    <tbody id="studentBody"></tbody>
+    <tbody>
+      <!-- Example Row -->
+      <tr>
+        <td>1</td>
+        <td>သူငယ်တန်း</td>
+        <td>15</td>
+        <td>18</td>
+        <td>33</td>
+        <td><button>❌</button></td>
+      </tr>
+    </tbody>
   </table>
 
-  <div class="form-container">
-    <h3>➕ ကျောင်းသားအသစ်ထည့်ရန်</h3>
-    <input type="text" id="name" placeholder="အမည်">
-    <input type="text" id="grade" placeholder="အတန်း">
-    <input type="text" id="father" placeholder="အဖအမည်">
-    <input type="text" id="mother" placeholder="အမိအမည်">
-    <input type="date" id="dob" placeholder="မွေးသက္ကရာဇ်">
-    <button onclick="addStudent()">ထည့်မည်</button>
-  </div>
+<div style="margin-top:30px;">
+  <h3>➕ ကျောင်းသားစာရင်း အသစ်ထည့်ရန်</h3>
+  <input type="text" id="grade" placeholder="အတန်း (ဥပမာ: ပထမတန်း)">
+  <input type="number" id="male" placeholder="ကျား">
+  <input type="number" id="female" placeholder="မ">
+  <button onclick="addStudent()">ထည့်မည်</button>
+</div>
 
-  <button onclick="history.back()">🔙 နောက်သို့</button>
-
-  <script>
-    let students = JSON.parse(localStorage.getItem("studentList")) || [];
-
-    function renderTable() {
-      const tbody = document.getElementById("studentBody");
-      tbody.innerHTML = "";
-      students.forEach((s, index) => {
-        tbody.innerHTML += `<tr>
-          <td>${index + 1}</td>
-          <td>${s.name}</td>
-          <td>${s.grade}</td>
-          <td>${s.father}</td>
-          <td>${s.mother}</td>
-          <td>${s.dob}</td>
-          <td><button onclick="deleteStudent(${index})">❌</button></td>
-        </tr>`;
-      });
-      localStorage.setItem("studentList", JSON.stringify(students));
-    }
-
-    function addStudent() {
-      const s = {
-        name: document.getElementById("name").value,
-        grade: document.getElementById("grade").value,
-        father: document.getElementById("father").value,
-        mother: document.getElementById("mother").value,
-        dob: document.getElementById("dob").value
-      };
-      if (s.name && s.grade && s.dob) {
-        students.push(s);
-        renderTable();
-        document.querySelectorAll("input").forEach(input => input.value = "");
-      } else {
-        alert("အမည်၊ အတန်း၊ မွေးသက္ကရာဇ် ဖြည့်ရန်လိုပါတယ်!");
-      }
-    }
-
-    function deleteStudent(index) {
-      if (confirm("ဤကျောင်းသားအား ဖျက်မှာသေချာလား?")) {
-        students.splice(index, 1);
-        renderTable();
-      }
-    }
-
-    function filterTable() {
-      const input = document.getElementById("searchInput").value.toLowerCase();
-      const rows = document.querySelectorAll("#studentBody tr");
-      rows.forEach(row => {
-        const name = row.children[1].textContent.toLowerCase();
-        row.style.display = name.includes(input) ? "" : "none";
-      });
-    }
-
-    renderTable();
-  </script>
+  <button class="back-button" onclick="history.back()">🔙 နောက်သို့</button>
 </body>
 </html>
+
+<script>
+  let studentList = JSON.parse(localStorage.getItem("studentList")) || [];
+
+  function renderTable() {
+    const tbody = document.querySelector("tbody");
+    tbody.innerHTML = "";
+    studentList.forEach((student, index) => {
+      const total = student.male + student.female;
+      tbody.innerHTML += `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${student.grade}</td>
+          <td>${student.male}</td>
+          <td>${student.female}</td>
+          <td>${total}</td>
+          <td><button onclick="deleteStudent(${index})">❌</button></td>
+        </tr>
+      `;
+    });
+    localStorage.setItem("studentList", JSON.stringify(studentList));
+  }
+
+  function addStudent() {
+    const grade = document.getElementById("grade").value.trim();
+    const male = parseInt(document.getElementById("male").value) || 0;
+    const female = parseInt(document.getElementById("female").value) || 0;
+    if (!grade || male < 0 || female < 0) {
+      alert("အချက်အလက်ပြည့်စုံဖြည့်ပါ");
+      return;
+    }
+    studentList.push({ grade, male, female });
+    document.getElementById("grade").value = "";
+    document.getElementById("male").value = "";
+    document.getElementById("female").value = "";
+    renderTable();
+  }
+
+  function deleteStudent(index) {
+    if (confirm("ဖျက်မှာသေချာလား?")) {
+      studentList.splice(index, 1);
+      renderTable();
+    }
+  }
+
+  renderTable();
+</script>
