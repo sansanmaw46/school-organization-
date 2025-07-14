@@ -70,12 +70,16 @@
       <tr>
         <th rowspan="2">စဉ်</th>
         <th rowspan="2">အတန်း</th>
+        <th colspan="4">၂၀၂၁-၂၂ ပညာသင်နှစ်</th>
         <th colspan="4">၂၀၂၂-၂၃ ပညာသင်နှစ်</th>
         <th colspan="4">၂၀၂၃-၂၄ ပညာသင်နှစ်</th>
         <th colspan="4">၂၀၂၄-၂၅ ပညာသင်နှစ်</th>
+        <th colspan="4">၂၀၂၅-၂၆ ပညာသင်နှစ်</th>
         <th rowspan="2">ဖျက်ရန်</th>
       </tr>
       <tr>
+        <th>ရှိ</th><th>ဖြေ</th><th>အောင်</th><th>ရာနှုန်း</th>
+        <th>ရှိ</th><th>ဖြေ</th><th>အောင်</th><th>ရာနှုန်း</th>
         <th>ရှိ</th><th>ဖြေ</th><th>အောင်</th><th>ရာနှုန်း</th>
         <th>ရှိ</th><th>ဖြေ</th><th>အောင်</th><th>ရာနှုန်း</th>
         <th>ရှိ</th><th>ဖြေ</th><th>အောင်</th><th>ရာနှုန်း</th>
@@ -87,18 +91,26 @@
   <div class="form-container">
     <h3>➕ အသစ်ထည့်ရန်</h3>
     <input type="text" id="grade" placeholder="အတန်း">
-    <input type="number" id="a_exist" placeholder="၂၀၂၂-၂၃ ရှိ">
+    <input type="number" id="a_exist" placeholder="၂၀၂၁-၂၂ ရှိ">
     <input type="number" id="a_exam" placeholder="ဖြေ">
     <input type="number" id="a_pass" placeholder="အောင်">
     <input type="number" id="a_percent" placeholder="ရာနှုန်း">
-    <input type="number" id="b_exist" placeholder="၂၀၂၃-၂၄ ရှိ">
+    <input type="number" id="b_exist" placeholder="၂၀၂၂-၂၃ ရှိ">
     <input type="number" id="b_exam" placeholder="ဖြေ">
     <input type="number" id="b_pass" placeholder="အောင်">
     <input type="number" id="b_percent" placeholder="ရာနှုန်း">
-    <input type="number" id="c_exist" placeholder="၂၀၂၄-၂၅ ရှိ">
+    <input type="number" id="c_exist" placeholder="၂၀၂၃-၂၄ ရှိ">
     <input type="number" id="c_exam" placeholder="ဖြေ">
     <input type="number" id="c_pass" placeholder="အောင်">
     <input type="number" id="c_percent" placeholder="ရာနှုန်း">
+    <input type="number" id="d_exist" placeholder="၂၀၂၄-၂၅ ရှိ">
+    <input type="number" id="d_exam" placeholder="ဖြေ">
+    <input type="number" id="d_pass" placeholder="အောင်">
+    <input type="number" id="d_percent" placeholder="ရာနှုန်း">
+    <input type="number" id="e_exist" placeholder="၂၀၂၅-၂၆ ရှိ">
+    <input type="number" id="e_exam" placeholder="ဖြေ">
+    <input type="number" id="e_pass" placeholder="အောင်">
+    <input type="number" id="e_percent" placeholder="ရာနှုန်း">
     <button onclick="addStatus()">ထည့်မည်</button>
   </div>
 
@@ -117,6 +129,8 @@
           <td>${s.a_exist}</td><td>${s.a_exam}</td><td>${s.a_pass}</td><td>${s.a_percent}</td>
           <td>${s.b_exist}</td><td>${s.b_exam}</td><td>${s.b_pass}</td><td>${s.b_percent}</td>
           <td>${s.c_exist}</td><td>${s.c_exam}</td><td>${s.c_pass}</td><td>${s.c_percent}</td>
+          <td>${s.d_exist}</td><td>${s.d_exam}</td><td>${s.d_pass}</td><td>${s.d_percent}</td>
+          <td>${s.e_exist}</td><td>${s.e_exam}</td><td>${s.e_pass}</td><td>${s.e_percent}</td>
           <td><button onclick="deleteStatus(${index})">❌</button></td>
         </tr>`;
       });
@@ -137,7 +151,15 @@
         c_exist: document.getElementById("c_exist").value,
         c_exam: document.getElementById("c_exam").value,
         c_pass: document.getElementById("c_pass").value,
-        c_percent: document.getElementById("c_percent").value
+        c_percent: document.getElementById("c_percent").value,
+        d_exist: document.getElementById("d_exist").value,
+        d_exam: document.getElementById("d_exam").value,
+        d_pass: document.getElementById("d_pass").value,
+        d_percent: document.getElementById("d_percent").value,
+        e_exist: document.getElementById("e_exist").value,
+        e_exam: document.getElementById("e_exam").value,
+        e_pass: document.getElementById("e_pass").value,
+        e_percent: document.getElementById("e_percent").value
       };
       if (s.grade) {
         statusList.push(s);
